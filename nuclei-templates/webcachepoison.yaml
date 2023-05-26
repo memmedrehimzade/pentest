@@ -1,0 +1,19 @@
+id: cache-poisoning-check
+
+info:
+  name: Cache Poisoning Check
+  author: Mammad Rahimzada
+  severity: high
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/{{randAlphaNumRand 10}}"
+    headers:
+      X-Forwarded-Host: "{{BaseURL}}.attacker.com"
+    matchers:
+      - type: word
+        part: body
+        words:
+          - ".attacker.com"
+        condition: and
